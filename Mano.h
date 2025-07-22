@@ -1,53 +1,34 @@
-// Archivo de definición de la clase Mano
-// Representa la mano de cartas de un jugador o crupier
-
+/*
+Clase Mano.h - conjunto de cartas de cada jugador
+*/
 #ifndef MANO_H
 #define MANO_H
 
 #include "Carta.h"
 
-/**
- * @class Mano
- * @brief Representa una mano de cartas (jugador o crupier).
- */
+// Representa las cartas que tiene un jugador o el crupier
 class Mano {
 protected:
-    Carta* cartas[12]; // Máximo 12 cartas en una mano
-    int cantidad;      // Número de cartas en la mano
+    Carta* cartas[12];  // maximo 12 cartas por mano
+    int cantidad;       // Las cartas que tiene actualmente
 
 public:
-    /**
-     * @brief Constructor de la mano. Inicializa la mano vacía.
-     */
+    // Constructor: inizializa la mano vacia
     Mano();
 
-    /**
-     * @brief Añade una carta a la mano.
-     * @param carta Puntero a la carta a añadir.
-     */
+    // Agrega una carta a la mano
     void agregarCarta(Carta* carta);
 
-    /**
-     * @brief Calcula el valor total de la mano según las reglas del Blackjack.
-     * @return Valor total de la mano.
-     */
+    // Calcula el puntaje total de la mano
     virtual int calcularValor() const;
 
-    /**
-     * @brief Muestra las cartas de la mano.
-     */
+    // Muestra todas las cartas
     virtual void mostrarMano() const;
 
-    /**
-     * @brief Cuenta el número de cartas en la mano.
-     * @return Número de cartas.
-     */
+    // Cuenta cuantas cartas hay en la mano
     int contarCartas() const;
 
-    /**
-     * @brief Verifica si la mano es Blackjack.
-     * @return Verdadero si tiene Blackjack.
-     */
+    // Verifica si es blackjack (21 con 2 cartas)
     bool esBlackjack() const;
 };
 
