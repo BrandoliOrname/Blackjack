@@ -1,18 +1,25 @@
-// Programa principal para jugar Blackjack
+/*
+Proyecto de Blackjack - POO
+Programa principal del juego
+*/
 
 #include "Controlador.h"
 #include <iostream>
+using namespace std;
 
 int main() {
-    std::cout << "Bienvenido al juego de Blackjack!" << std::endl;
-    int numJugadores;
-    std::cout << "Ingrese el número de jugadores (1-4): ";
-    std::cin >> numJugadores;
-    if (numJugadores < 1 || numJugadores > 4) numJugadores = 1;
+    cout << "=== BLACKJACK ===" << endl;
+    int jugadores;
+    cout << "¿Cuantos jugadores van a jugar? (1-4): ";
+    cin >> jugadores;
 
-    // Crear el controlador del juego
-    Controlador juego(numJugadores);
-    juego.jugarPartida();
+    if(jugadores < 1 || jugadores > 4) {
+        cout << "Numero invalido, jugara solo 1 jugador" << endl;
+        jugadores = 1;
+    }
+    // Crea el controlador para comenzar el juego
+    Controlador game(jugadores);
+    game.jugarPartida();
 
     return 0;
 }
