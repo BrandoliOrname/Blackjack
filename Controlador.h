@@ -1,5 +1,6 @@
-// Archivo de definición de la clase Controlador
-// Controla el flujo del juego de Blackjack
+/*
+Controlador de juego.h maneja toda la lógica principal
+*/
 
 #ifndef CONTROLADOR_H
 #define CONTROLADOR_H
@@ -8,32 +9,22 @@
 #include "Crupier.h"
 #include "Mazo.h"
 
-/**
- * @class Controlador
- * @brief Controla el flujo principal del juego.
- */
+// Clase principal que controla todo el flujo del juego
 class Controlador {
 private:
-    Mazo mazo; // Mazo del juego
-    Jugador* jugadores[4]; // Máximo 4 jugadores
-    int numJugadores; // Número de jugadores en la partida
-    Crupier crupier; // Crupier del juego
+    Mazo mazo;               // el mazo de cartas
+    Jugador* jugadores[4];   // hasta 4 jugadores
+    int numJugadores;        // cantidad actual de jugadores
+    Crupier crupier;         // el crupier
 
 public:
-    /**
-     * @brief Constructor del controlador.
-     * @param n Número de jugadores.
-     */
+    // Constructor que inicializa el juego
     Controlador(int n);
 
-    /**
-     * @brief Inicia una partida de Blackjack.
-     */
+    // Ejecuta una partida completa
     void jugarPartida();
 
-    /**
-     * @brief Determina el ganador de la mano y muestra resultados.
-     */
+    // Verifica quien ganó y muestra resultados
     void determinarGanador();
 };
 
