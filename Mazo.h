@@ -1,41 +1,29 @@
-// Archivo de definición de la clase Mazo
-// Representa el mazo de cartas del juego de Blackjack
-
+/*
+Clase Mazo.h - maneja todas las cartas del juego
+*/
+    
 #ifndef MAZO_H
 #define MAZO_H
 
 #include "Carta.h"
 
-/**
- * @class Mazo
- * @brief Representa un mazo con cartas para repartir.
- */
+// Clase que representa el mazo completo de cartas
 class Mazo {
 private:
-    Carta* cartas[52]; // Arreglo de punteros a cartas
-    int cartasRestantes; // Número de cartas que quedan en el mazo
+    Carta* cartas[52];    // arreglo con todas las cartas
+    int cartasRestantes;  // cuantas cartas quedan por repartir
 
 public:
-    /**
-     * @brief Constructor del mazo. Inicializa todas las cartas.
-     */
+    // Constructor - crea el mazo completo
     Mazo();
 
-    /**
-     * @brief Reparte la siguiente carta del mazo.
-     * @return Puntero a la carta repartida.
-     */
+    // Saca una carta del mazo
     Carta* repartir();
 
-    /**
-     * @brief Informa cuántas cartas quedan en el mazo.
-     * @return Número de cartas restantes.
-     */
+    // Dice cuantas cartas quedan
     int cartasDisponibles() const;
 
-    /**
-     * @brief Mezcla las cartas del mazo.
-     */
+    // Revuelve las cartas
     void mezclar();
 };
 
