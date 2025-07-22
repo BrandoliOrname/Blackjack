@@ -8,7 +8,7 @@ Carta::Carta(char nombre) : nombre(nombre) {
     if (nombre == 'A') {
         valor = 11; // As vale 11 por defecto
     }
-    else if (nombre == 'T' || nombre == 'J' || nombre == 'Q' || nombre == 'K') {
+    else if (nombre == 'J' || nombre == 'Q' || nombre == 'K') {
         valor = 10; // Figuras valen 10
     }
     else {
