@@ -8,8 +8,8 @@ Carta::Carta(char nombre) : nombre(nombre) {
     if (nombre == 'A') {
         valor = 11; // As vale 11 por defecto
     }
-    else if (nombre == 'J' || nombre == 'Q' || nombre == 'K') {
-        valor = 10; // Figuras valen 10
+    else if (nombre == 'J' || nombre == 'Q' || nombre == 'K') { //A la hora de correr el código se pueden cambiar los nombres
+        valor = 10; // Figuras valen 10                         //J=Jota, Q=Reina, K=Rey
     }
     else {
         valor = nombre - '0'; // Convierte char a int
