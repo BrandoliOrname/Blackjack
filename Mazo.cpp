@@ -1,42 +1,57 @@
-// Implementación de la clase Mazo
+/*
+ Implementación de la clase Mano.h
+*/
+#include "Mano.h"
+#include <iostream>
 
-#include "Mazo.h"
-#include <cstdlib> // Para rand y srand
-#include <ctime>   // Para time (semilla de aleatoriedad)
+using namespace std;
 
-// Constructor: inicializa el mazo con 52 cartas estándar (sin comodines, sin palo)
-Mazo::Mazo() : cartasRestantes(52) {
-    int pos = 0;
-    // Para cada nombre de carta, crear las cartas (4 de cada tipo)
-    char nombres[] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
-    for (int i = 0; i < 13; i++) {
-        for (int j = 0; j < 4; j++) {
-            cartas[pos++] = new Carta(nombres[i]);
+//Constructor: inicia la mano con 0 cartas
+Mano::Mano() : cantidad(0) {}
+
+//Añade una carta a la mano
+void Mano::agregarCarta(Carta* carta) {
+    if (cantidad < 12) {
+        cartas[cantidad] = carta;
+        cantidad++;
+    }
+}
+
+//Calcula el valor total de la mano
+int Mano::calcularValor() const {
+    int total = 0;
+    int ases = 0;
+    
+// Sumar valores de las cartas
+    for (int i = 0; i < cantidad; i++) {
+        int valor = cartas[i]->obtenerValor();
+        total += valor;
+        if (cartas[i]->obtenerNombre() == 'A') {
+            ases++;
         }
     }
-    mezclar();
-}
 
-// Reparte la siguiente carta del mazo y la elimina del arreglo
-Carta* Mazo::repartir() {
-    if (cartasRestantes > 0) {
-        return cartas[--cartasRestantes];
+    // Ajustar ases si nos pasamos de 21
+    while (total > 21 && ases > 0) {
+        total -= 10; // cambiar As de 11 a 1
+        ases--;
     }
-    return nullptr; // Si no quedan cartas, retorna nulo
-}
 
-// Devuelve el número de cartas disponibles
-int Mazo::cartasDisponibles() const {
-    return cartasRestantes;
+    return total;
 }
-
-// Mezcla el mazo usando el algoritmo de Fisher-Yates
-void Mazo::mezclar() {
-    srand(time(0));
-    for (int i = cartasRestantes - 1; i > 0; i--) {
-        int j = rand() % (i + 1);
-        Carta* temp = cartas[i];
-        cartas[i] = cartas[j];
-        cartas[j] = temp;
+// Muestra las cartas en la mano
+void Mano::mostrarMano() const {
+    cout << "Cartas: ";
+    for (int i = 0; i < cantidad; i++) {
+        cout << cartas[i]->obtenerNombre() << " ";
     }
+    cout << "(Total: " << calcularValor() << ")" << endl;
+}
+// Muestra la cantidad de cartas en la mano
+int Mano::contarCartas() const {
+    return cantidad;
+}
+// Verifica si la mano es Blackjack (2 cartas con valor 21)
+bool Mano::esBlackjack() const {
+    return (cantidad == 2 && calcularValor() == 21);
 }
