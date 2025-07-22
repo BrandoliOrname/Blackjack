@@ -1,59 +1,45 @@
-// Archivo de definición de la clase Jugador
-// Representa un jugador genérico de Blackjack
+/*
+Clase Jugador.h - representa a cada jugador 
+*/
 
 #ifndef JUGADOR_H
 #define JUGADOR_H
 
 #include "Mano.h"
+#include "Mazo.h"
 
-/**
- * @class Jugador
- * @brief Clase base para jugador.
- */
+// Clase base para los jugadores
 class Jugador {
 protected:
-    Mano mano; // Mano del jugador
-    int apuesta; // Cantidad apostada
+    Mano mano;      // cartas del jugador
+    int apuesta;    // Cantidad de dinero apostado
 
 public:
-    /**
-     * @brief Constructor del jugador.
-     */
+    // Constructor
     Jugador();
 
-    /**
-     * @brief Solicita una carta al mazo.
-     * @param mazo Puntero al mazo para repartir carta.
-     */
+    // Pide una carta del mazo
     virtual void pedirCarta(Mazo* mazo);
 
-    /**
-     * @brief Muestra la mano del jugador.
-     */
+    // Muestra sus cartas
     virtual void mostrarMano() const;
 
-    /**
-     * @brief Calcula el valor de la mano del jugador.
-     * @return Valor total.
-     */
+    // Obtiene el valor de su mano
     virtual int obtenerValorMano() const;
 
-    /**
-     * @brief Coloca una apuesta.
-     * @param cantidad Cantidad apostada.
-     */
+    // Hace una apuesta
     void apostar(int cantidad);
 
-    /**
-     * @brief Obtiene la cantidad apostada.
-     * @return Cantidad apostada.
-     */
+    // Devuelve cuanto apostó
     int obtenerApuesta() const;
 
-    /**
-     * @brief Reinicia la mano para nueva ronda.
-     */
+    // Reinicia para nueva partida
     void reiniciarMano();
+
+    // Acceso a la mano (para verificar blackjack)
+    const Mano& getMano() const {
+        return mano;
+    }
 };
 
 #endif // JUGADOR_H
