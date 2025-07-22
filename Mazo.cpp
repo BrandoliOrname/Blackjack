@@ -1,57 +1,47 @@
 /*
- Implementación de la clase Mano.h
+Implementación del la clase Mazo.h 
 */
-#include "Mano.h"
-#include <iostream>
-
-using namespace std;
-
-//Constructor: inicia la mano con 0 cartas
-Mano::Mano() : cantidad(0) {}
-
-//Añade una carta a la mano
-void Mano::agregarCarta(Carta* carta) {
-    if (cantidad < 12) {
-        cartas[cantidad] = carta;
-        cantidad++;
-    }
-}
-
-//Calcula el valor total de la mano
-int Mano::calcularValor() const {
-    int total = 0;
-    int ases = 0;
     
-// Sumar valores de las cartas
-    for (int i = 0; i < cantidad; i++) {
-        int valor = cartas[i]->obtenerValor();
-        total += valor;
-        if (cartas[i]->obtenerNombre() == 'A') {
-            ases++;
+#include "Mazo.h"
+#include <cstdlib> // Funciones rand() y srand()
+#include <ctime>   // Función time() para semilla aleatoria
+
+// Constructor: crea un mazo estándar de 52 cartas y lo mezcla
+
+Mazo::Mazo() : cartasRestantes(52) {
+    int index = 0;
+    char tipos[] = {'A','2','3','4','5','6','7','8','9','T','J','Q','K'};
+
+    // Crear 4 cartas de cada tipo (simula los 4 palos)
+    for (int i = 0; i < 13; i++) {
+        for (int j = 0; j < 4; j++) {
+            cartas[index] = new Carta(tipos[i]);
+            index++;
         }
     }
+    mezclar();
+}
 
-    // Ajustar ases si nos pasamos de 21
-    while (total > 21 && ases > 0) {
-        total -= 10; // cambiar As de 11 a 1
-        ases--;
+// Devuelve la siguiente carta del mazo, o nullptr si ya no quedan cartas
+Carta* Mazo::repartir() {
+    if (cartasRestantes > 0) {
+        cartasRestantes--;
+        return cartas[cartasRestantes];
     }
+    return nullptr;
+}
+// Devuelve las cartas que quedan en el mazo
+int Mazo::cartasDisponibles() const {
+    return cartasRestantes;
+}
 
-    return total;
-}
-// Muestra las cartas en la mano
-void Mano::mostrarMano() const {
-    cout << "Cartas: ";
-    for (int i = 0; i < cantidad; i++) {
-        cout << cartas[i]->obtenerNombre() << " ";
+void Mazo::mezclar() {
+    srand(time(0));
+    // algoritmo simple para mezclar el mazo (Fisher-Yates)
+    for (int i = cartasRestantes - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        Carta* temp = cartas[i];
+        cartas[i] = cartas[j];
+        cartas[j] = temp;
     }
-    cout << "(Total: " << calcularValor() << ")" << endl;
-}
-// Muestra la cantidad de cartas en la mano
-int Mano::contarCartas() const {
-    return cantidad;
-}
-// Verifica si la mano es Blackjack (2 cartas con valor 21)
-bool Mano::esBlackjack() const {
-    return (cantidad == 2 && calcularValor() == 21);
 }
