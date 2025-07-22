@@ -1,37 +1,26 @@
-// Archivo de definición de la clase Crupier
-// Hereda de Jugador pero tiene lógica especial para repartir y mostrar cartas
+/*
+Clase Crupier.h - jugador especial que maneja el juego
+*/
 
 #ifndef CRUPIER_H
 #define CRUPIER_H
 
 #include "Jugador.h"
+#include "Mazo.h"
 
-/**
- * @class Crupier
- * @brief Clase que representa el crupier, hereda de Jugador.
- */
+// El crupier hereda de jugador pero tiene reglas especiales
 class Crupier : public Jugador {
 public:
-    /**
-     * @brief Constructor del crupier.
-     */
+    // constructor
     Crupier();
 
-    /**
-     * @brief El crupier muestra solo una carta al inicio.
-     */
+    // Al inicio solo muestra una carta
     void mostrarCartaVisible() const;
 
-    /**
-     * @brief Lógica especial para tomar cartas según reglas del crupier.
-     * El crupier toma cartas hasta tener al menos 17 puntos.
-     * @param mazo Puntero al mazo.
-     */
+    // Juega automaticamente hasta llegar a 17 o mas
     void jugarTurno(Mazo* mazo);
 
-    /**
-     * @brief Muestra la mano completa del crupier.
-     */
+    // muestra todas sus cartas
     void mostrarMano() const override;
 };
 
