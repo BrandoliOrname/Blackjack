@@ -1,28 +1,32 @@
-// Implementación de la clase Crupier
-
+/*
+    Implementación de la clase Crupier.h
+*/
 #include "Crupier.h"
 #include <iostream>
+using namespace std;
 
-// Constructor: llama al constructor base
+// Constructor: inicializa el crupier como un jugador especial
 Crupier::Crupier() : Jugador() {}
 
-// Muestra solo la primera carta del crupier
+// Muestra solo la carta visible del crupier
 void Crupier::mostrarCartaVisible() const {
-    std::cout << "Carta visible del crupier: ";
+    cout << "Carta visible del crupier: ";
     if (mano.contarCartas() > 0) {
-        std::cout << mano.calcularValor() << " (solo la primera carta)" << std::endl;
+        cout << "Una carta (valor oculto)" << endl;
     }
 }
 
-// El crupier toma cartas hasta llegar a 17 o más puntos
+// El crupier juega su turno, pidiendo cartas hasta alcanzar 17 o más
 void Crupier::jugarTurno(Mazo* mazo) {
+    cout << "Turno del crupier..." << endl;
     while (mano.calcularValor() < 17) {
+        cout << "Crupier pide carta" << endl;
         pedirCarta(mazo);
     }
 }
 
-// Muestra la mano completa del crupier
+// Muestra todas las cartas en la mano del crupier
 void Crupier::mostrarMano() const {
-    std::cout << "Mano del crupier: ";
+    cout << "Crupier: ";
     mano.mostrarMano();
 }
