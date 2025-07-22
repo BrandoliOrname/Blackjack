@@ -1,23 +1,30 @@
-// Implementación de la clase Controlador
-
+/*
+Implementación de la clase Controlador.H
+*/
 #include "Controlador.h"
 #include <iostream>
+using namespace std;
 
-// Constructor: inicializa el mazo y los jugadores
+//Constructor: inicializa el mazo y los jugadores
 Controlador::Controlador(int n) : numJugadores(n) {
     for (int i = 0; i < numJugadores; i++) {
         jugadores[i] = new Jugador();
     }
 }
 
-// Inicia una partida de Blackjack
+// Inicia una nueva partida de Blackjack
 void Controlador::jugarPartida() {
+    cout << "\n--- NUEVA PARTIDA ---" << endl;
     mazo.mezclar();
-    // Reiniciar manos
-    for (int i = 0; i < numJugadores; i++) jugadores[i]->reiniciarMano();
+
+    // Limpiar manos anteriores
+    for (int i = 0; i < numJugadores; i++) {
+        jugadores[i]->reiniciarMano();
+    }
     crupier.reiniciarMano();
 
-    // Repartir dos cartas iniciales a cada jugador y al crupier
+    // Repartir cartas iniciales
+    cout << "Repartiendo cartas..." << endl;
     for (int i = 0; i < numJugadores; i++) {
         jugadores[i]->pedirCarta(&mazo);
         jugadores[i]->pedirCarta(&mazo);
@@ -25,49 +32,74 @@ void Controlador::jugarPartida() {
     crupier.pedirCarta(&mazo);
     crupier.pedirCarta(&mazo);
 
-    // Mostrar manos iniciales
-    for (int i = 0; i < numJugadores; i++) jugadores[i]->mostrarMano();
+    // Mostrar situación inicial
+    for (int i = 0; i < numJugadores; i++) {
+        cout << "\nJugador " << (i+1) << ":" << endl;
+        jugadores[i]->mostrarMano();
+    }
+    cout << endl;
     crupier.mostrarCartaVisible();
 
     // Turno de cada jugador
     for (int i = 0; i < numJugadores; i++) {
+        cout << "\n--- Turno Jugador " << (i+1) << " ---" << endl;
         while (jugadores[i]->obtenerValorMano() < 21) {
-            std::cout << "Jugador " << i+1 << ", ¿quieres otra carta? (s/n): ";
-            char resp;
-            std::cin >> resp;
-            if (resp == 's') {
+            cout << "¿Quieres pedir otra carta? (s/n): ";
+            char respuesta;
+            cin >> respuesta;
+
+            if (respuesta == 's' || respuesta == 'S') {
                 jugadores[i]->pedirCarta(&mazo);
                 jugadores[i]->mostrarMano();
-            } else break;
+
+                if (jugadores[i]->obtenerValorMano() > 21) {
+                    cout << "¡Te pasaste de 21!" << endl;
+                    break;
+                }
+            } else {
+                cout << "Te plantas con " << jugadores[i]->obtenerValorMano() << endl;
+                break;
+            }
         }
     }
 
     // Turno del crupier
+    cout << "\n--- Turno del Crupier ---" << endl;
     crupier.jugarTurno(&mazo);
     crupier.mostrarMano();
 
+    // Ver quien ganó
+    cout << "\n--- RESULTADOS ---" << endl;
     determinarGanador();
 }
 
-// Determina el ganador y muestra resultados
 void Controlador::determinarGanador() {
-    int valorCrupier = crupier.obtenerValorMano();
-    bool blackjackCrupier = crupier.mano.esBlackjack();
+    int puntajeCrupier = crupier.obtenerValorMano();
+    bool crupierBlackjack = crupier.getMano().esBlackjack();
+
     for (int i = 0; i < numJugadores; i++) {
-        int valorJugador = jugadores[i]->obtenerValorMano();
-        bool blackjackJugador = jugadores[i]->mano.esBlackjack();
-        std::cout << "Jugador " << i+1 << ": ";
-        if (valorJugador > 21) {
-            std::cout << "Pierde (se pasó de 21)." << std::endl;
-        } else if (valorCrupier > 21 || valorJugador > valorCrupier) {
-            if (blackjackJugador && !blackjackCrupier)
-                std::cout << "¡Gana con Blackjack! (3:2 de la apuesta)" << std::endl;
-            else
-                std::cout << "Gana (más cercano a 21)." << std::endl;
-        } else if (valorJugador == valorCrupier && valorJugador >= 17) {
-            std::cout << "Empate (recupera su apuesta)." << std::endl;
-        } else {
-            std::cout << "Pierde (crupier más cercano a 21)." << std::endl;
+        int puntajeJugador = jugadores[i]->obtenerValorMano();
+        bool jugadorBlackjack = jugadores[i]->getMano().esBlackjack();
+
+        cout << "Jugador " << (i+1) << " (" << puntajeJugador << "): ";
+
+        if (puntajeJugador > 21) {
+            cout << "PIERDE - Se pasó de 21" << endl;
+        }
+        else if (puntajeCrupier > 21) {
+            cout << "GANA - Crupier se pasó" << endl;
+        }
+        else if (jugadorBlackjack && !crupierBlackjack) {
+            cout << "GANA CON BLACKJACK!" << endl;
+        }
+        else if (puntajeJugador > puntajeCrupier) {
+            cout << "GANA - Más cerca de 21" << endl;
+        }
+        else if (puntajeJugador == puntajeCrupier) {
+            cout << "EMPATE" << endl;
+        }
+        else {
+            cout << "PIERDE - Crupier ganó" << endl;
         }
     }
 }
