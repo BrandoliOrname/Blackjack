@@ -1,42 +1,40 @@
-// Implementación de la clase Jugador
-
+/*
+Implementación de Jugador.h
+*/
 #include "Jugador.h"
 #include <iostream>
 
-// Constructor: inicializa la mano y apuesta
+using namespace std;
+
+// Constructor: inicializa la apuesta en 0
 Jugador::Jugador() : apuesta(0) {}
 
-// Solicita una carta al mazo y la añade a su mano
+// solicita una carta al mazo y la añade a la mano del jugador
 void Jugador::pedirCarta(Mazo* mazo) {
-    Carta* carta = mazo->repartir();
-    if (carta) {
-        mano.agregarCarta(carta);
-        std::cout << "El jugador recibe la carta: " << carta->obtenerNombre() << std::endl;
+    Carta* nuevaCarta = mazo->repartir();
+    if (nuevaCarta) {
+        mano.agregarCarta(nuevaCarta);
+        cout << "Recibes: " << nuevaCarta->obtenerNombre() << endl;
     }
 }
-
-// Muestra la mano del jugador
+// Muestra las cartas en la mano del jugador
 void Jugador::mostrarMano() const {
-    std::cout << "Mano del jugador: ";
+    cout << "Tu mano: ";
     mano.mostrarMano();
 }
-
-// Devuelve el valor de la mano
+// Devuelve el valor total de la mano del jugador
 int Jugador::obtenerValorMano() const {
     return mano.calcularValor();
 }
-
-// Coloca una apuesta
+// coloca una apuesta para el jugador
 void Jugador::apostar(int cantidad) {
     apuesta = cantidad;
 }
-
-// Devuelve la cantidad apostada
+// Devuelve la cantidad apostada por el jugador
 int Jugador::obtenerApuesta() const {
     return apuesta;
 }
 
-// Reinicia la mano del jugador
 void Jugador::reiniciarMano() {
-    mano = Mano();
+    mano = Mano(); // crear nueva mano vacia
 }
