@@ -143,3 +143,4 @@ uno con el Crupier.
 a otras partes del sistema (o incluso otros sistemas) interactuar con la lógica del
 juego de Blackjack sin necesidad de una interfaz de usuario específica. Esto se
 enfoca en la funcionalidad principal del juego.
+Aqui estan todos los requerimientos.
