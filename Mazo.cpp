@@ -10,10 +10,10 @@ Implementación del la clase Mazo.h
 
 Mazo::Mazo() : cartasRestantes(52) {
     int index = 0;
-    char tipos[] = {'A','2','3','4','5','6','7','8','9','J','Q','K'};
+    char tipos[] = {'A','2','3','4','5','6','7','8','9','10','J','Q','K'};
 
     // Crear 4 cartas de cada tipo (simula los 4 palos)
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 13; i++) {
         for (int j = 0; j < 4; j++) {
             cartas[index] = new Carta(tipos[i]);
             index++;
