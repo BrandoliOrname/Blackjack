@@ -6,7 +6,7 @@ Implementación del la clase Mazo.h
 #include <cstdlib> // Funciones rand() y srand()
 #include <ctime>   // Función time() para semilla aleatoria
 
-// Constructor: crea un mazo estándar de 52 cartas y lo mezcla
+// Constructor: crea un mazo estándar de 52 cartas.
 
 Mazo::Mazo() : cartasRestantes(52) {
     int index = 0;
