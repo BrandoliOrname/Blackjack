@@ -21,7 +21,9 @@ void testMano() {
     m.agregarCarta(new Carta('K'));
     assert(m.calcularValor() == 21);
     assert(m.esBlackjack() == true);
+
 }
+
 
 void testMazo() {
     Mazo mazo;
@@ -29,6 +31,7 @@ void testMazo() {
     mazo.repartir();
     assert(mazo.cartasDisponibles() == 51);
 }
+
 
 int main() {
     testCarta();
